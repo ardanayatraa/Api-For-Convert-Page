@@ -5,28 +5,36 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const app = express();
-const PORT = 3000;
+const PORT =  3000;
 
 app.use(cors());
 
 app.get('/screenshot', async (req, res) => {
-    const { url, width = 720, height = 1280, format = 'png' } = req.query;
-
-    if (!url) return res.status(400).json({ error: 'URL is required' });
-
+    let browser;
     try {
-        const browser = await puppeteer.launch({ headless: 'new' });
+        const { url, width = 720, height = 1280, format = 'png' } = req.query;
+
+        if (!url || !url.startsWith('http')) {
+            return res.status(400).json({ error: 'Valid URL is required' });
+        }
+
+        browser = await puppeteer.launch({
+            headless: 'new',
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+
         const page = await browser.newPage();
-        await page.setViewport({ width: parseInt(width), height: parseInt(height) });
+        await page.setViewport({ width: parseInt(width, 10), height: parseInt(height, 10) });
         await page.goto(url, { waitUntil: 'networkidle2' });
 
         const screenshot = await page.screenshot({ type: format, fullPage: true });
-        await browser.close();
 
         res.setHeader('Content-Type', `image/${format}`);
         res.send(screenshot);
     } catch (error) {
         res.status(500).json({ error: 'Failed to capture screenshot', details: error.message });
+    } finally {
+        if (browser) await browser.close();
     }
 });
 
