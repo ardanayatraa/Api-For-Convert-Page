@@ -8,18 +8,21 @@ const app = express();
 const PORT =  3000;
 
 app.use(cors());
+app.use(express.json());  // Untuk menerima JSON body
 
-app.get('/screenshot', async (req, res) => {
+app.post('/screenshot', async (req, res) => {
     let browser;
     try {
-        const { url, width = 720, height = 1280, format = 'png' } = req.query;
+        const { url, width = 720, height = 1280, format = 'png' } = req.body;  // Ambil url dari body request
+
+        console.log(`Incoming URL: ${url}`); // Log the incoming URL
 
         if (!url || !url.startsWith('http')) {
             return res.status(400).json({ error: 'Valid URL is required' });
         }
 
         browser = await puppeteer.launch({
-            headless: 'new',
+            headless: false,
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
 
