@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noonight Capt.</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-camera"></i>
+                    <span>Noonight Capt.</span>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="#" class="nav-link" onclick="showSection('home')">Home</a>
+                    <a href="#" class="nav-link" onclick="showSection('dashboard')" id="dashboardLink" style="display: none;">Dashboard</a>
+                    <a href="/api-docs" class="nav-link" target="_blank">API Docs</a>
+                    <div class="nav-auth" id="navAuth">
+                        <button class="btn btn-outline" onclick="showLogin()">Login</button>
+                        <button class="btn btn-primary" onclick="showRegister()">Sign Up</button>
+                    </div>
+                    <div class="nav-user" id="navUser" style="display: none;">
+                        <span id="userName"></span>
+                        <button class="btn btn-outline" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+                <div class="nav-toggle" onclick="toggleNav()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="homeSection" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Professional Screenshot Service</h1>
+                    <p class="hero-subtitle">Capture high-quality screenshots of any website with our powerful API. Perfect for developers, designers, and businesses.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-large" onclick="showRegister()">Get Started Free</button>
+                        <button class="btn btn-outline btn-large" onclick="showDemo()">Try Demo</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="screenshot-preview">
+                        <div class="browser-mockup">
+                            <div class="browser-header">
+                                <div class="browser-buttons">
+                                    <span class="btn-close"></span>
+                                    <span class="btn-minimize"></span>
+                                    <span class="btn-maximize"></span>
+                                </div>
+                                <div class="browser-url">https://example.com</div>
+                            </div>
+                            <div class="browser-content">
+                                <div class="content-placeholder"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+                <div class="container">
+                    <h2 class="section-title">Powerful Features</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>Lightning Fast</h3>
+                            <p>Capture screenshots in seconds with our optimized infrastructure</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <h3>Customizable</h3>
+                            <p>Control dimensions, format, and capture options</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Secure & Reliable</h3>
+                            <p>Enterprise-grade security with 99.9% uptime</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Analytics</h3>
+                            <p>Track usage and monitor your screenshot history</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboardSection" class="section">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <div class="user-stats" id="userStats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalScreenshots">0</div>
+                            <div class="stat-label">Total Screenshots</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screenshot Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-camera"></i> Capture Screenshot</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="screenshotForm">
+                            <div class="form-group">
+                                <label for="url">Website URL</label>
+                                <input type="url" id="url" placeholder="https://example.com" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="width">Width</label>
+                                    <input type="number" id="width" value="1920" min="320" max="3840">
+                                </div>
+                                <div class="form-group">
+                                    <label for="height">Height</label>
+                                    <input type="number" id="height" value="1080" min="240" max="2160">
+                                </div>
+                                <div class="form-group">
+                                    <label for="format">Format</label>
+                                    <select id="format">
+                                        <option value="png">PNG</option>
+                                        <option value="jpeg">JPEG</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="fullPage" checked>
+                                    <span class="checkmark"></span>
+                                    Capture full page
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-large">
+                                <i class="fas fa-camera"></i> Capture Screenshot
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Screenshot Result -->
+                <div id="screenshotResult" class="card" style="display: none;">
+                    <div class="card-header">
+                        <h2><i class="fas fa-image"></i> Screenshot Result</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="screenshotDisplay"></div>
+                    </div>
+                </div>
+
+                <!-- Screenshot History -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-history"></i> Recent Screenshots</h2>
+                        <button class="btn btn-outline" onclick="loadScreenshots()">
+                            <i class="fas fa-refresh"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="screenshotHistory">
+                            <div class="loading">Loading screenshots...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auth Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="authTitle">Login</h2>
+                    <span class="close" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="authForm">
+                        <div id="registerFields" style="display: none;">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" placeholder="Enter username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Enter email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large" id="authSubmit">Login</button>
+                    </form>
+                    <div class="auth-switch">
+                        <p id="authSwitchText">Don't have an account? <a href="#" onclick="toggleAuthMode()">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Capturing screenshot...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

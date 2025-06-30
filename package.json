@@ -1,20 +1,33 @@
 {
-  "name": "api-for-convert-page",
-  "version": "1.0.0",
+  "name": "screenshot-service-pro",
+  "version": "2.0.0",
   "main": "server.js",
-"scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js"
-}
-,
-  "keywords": [],
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "screenshot",
+    "api",
+    "puppeteer",
+    "multi-user"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Professional multi-user screenshot service with authentication and modern UI",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
-    "puppeteer": "^24.5.0"
+    "puppeteer": "^24.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "express-rate-limit": "^7.1.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
